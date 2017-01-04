@@ -6,11 +6,11 @@ namespace Jace.Execution
     public class NullableDoubleNumericalOperations : INumericalOperations<double?>
     {
         public static readonly NullableDoubleNumericalOperations Instance = new NullableDoubleNumericalOperations();
-        private DoubleConstants _constants;
+        private NullableDoubleConstants _constants;
 
         public NullableDoubleNumericalOperations()
         {
-            _constants = new DoubleConstants();
+            _constants = new NullableDoubleConstants();
         }
 
         public double? Multiply(double? n1, double? n2)
@@ -95,7 +95,7 @@ namespace Jace.Execution
             return parsed;
         }
 
-        private class DoubleConstants : INumericConstants<double?>
+        private class NullableDoubleConstants : INumericConstants<double?>
         {
             public double? Zero
             {

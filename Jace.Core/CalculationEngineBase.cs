@@ -33,7 +33,7 @@ namespace Jace
         {
             this.executionFormulaCache = new MemoryCache<string, Func<IDictionary<string, T>, T>>();
 
-            this.FunctionRegistry = new FunctionRegistry(false);
+            this.FunctionRegistry = new FunctionRegistry<T>(false);
             this.ConstantRegistry = new ConstantRegistry<T>(false);
             this.cultureInfo = cultureInfo;
             this.cacheEnabled = cacheEnabled;

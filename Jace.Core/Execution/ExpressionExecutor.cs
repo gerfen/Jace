@@ -57,7 +57,7 @@ namespace Jace.Execution
             return Expression.Lambda<Func<FormulaContext<T>, T>>(
                 Expression.Block(
                     Expression.Return(returnLabel, GenerateMethodBody(operation, contextParameter, functionRegistry)),
-                    Expression.Label(returnLabel, Expression.Constant(_numericOperations.Constants.Zero))
+                    Expression.Label(returnLabel, Expression.Constant(_numericOperations.Constants.Zero, typeof(T)))
                 ),
                 contextParameter
             ).Compile();
@@ -115,7 +115,8 @@ namespace Jace.Execution
                         Expression.Return(returnLabel, value),
                         throwException
                     ),
-                    Expression.Label(returnLabel, Expression.Constant(_numericOperations.Constants.Zero))
+
+                    Expression.Label(returnLabel, Expression.Constant(_numericOperations.Constants.Zero, typeof(T)))
                 );
             }
 

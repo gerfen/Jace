@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace Jace.Execution
 {
-    public class FunctionRegistry : IFunctionRegistry
+    public class FunctionRegistry<T> : IFunctionRegistry
     {
         private readonly bool caseSensitive;
         private readonly Dictionary<string, FunctionInfo> functions;
@@ -49,7 +49,7 @@ namespace Jace.Execution
 #else
             foreach (Type genericArgument in funcType.GetGenericArguments())
 #endif
-                if (genericArgument != typeof(double))
+                if (genericArgument != typeof(T))
                     throw new ArgumentException("Only doubles are supported as function arguments", "function");
 
             functionName = ConvertFunctionName(functionName);
