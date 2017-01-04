@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Jace.Execution;
 using Jace.Tokenizer;
 
 #if NETFX_CORE
@@ -17,6 +18,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jace.Tests
 {
+
+    public class TokenReader : TokenReader<double>
+    {
+        internal TokenReader() : base(DoubleNumericalOperations.Instance) { }
+        internal TokenReader(CultureInfo cultureInfo) : base(cultureInfo, DoubleNumericalOperations.Instance) { }
+
+    }
+
 #if !NETCORE
     [TestClass]
 #endif
@@ -29,7 +38,7 @@ namespace Jace.Tests
 #endif
         public void TestTokenReader1()
         {
-            TokenReader reader = new TokenReader();
+            var reader = new TokenReader();
             List<Token> tokens = reader.Read("42+31");
 #if !NETCORE
             Assert.AreEqual(3, tokens.Count);
@@ -70,7 +79,7 @@ namespace Jace.Tests
 #endif
         public void TestTokenReader2()
         {
-            TokenReader reader = new TokenReader();
+            var reader = new TokenReader();
             List<Token> tokens = reader.Read("(42+31)");
 #if !NETCORE
             Assert.AreEqual(5, tokens.Count);

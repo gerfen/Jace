@@ -36,14 +36,14 @@ namespace Jace.DemoApp
 
                 string formula = formulaTextBox.Text;
 
-                TokenReader reader = new TokenReader(CultureInfo.InvariantCulture);
+                TokenReader<double> reader = new TokenReader<double>(CultureInfo.InvariantCulture, new DoubleNumericalOperations());
                 List<Token> tokens = reader.Read(formula);
 
                 ShowTokens(tokens);
 
                 IFunctionRegistry functionRegistry = new FunctionRegistry(false);
 
-                AstBuilder astBuilder = new AstBuilder(functionRegistry);
+                var astBuilder = new AstBuilder<decimal>(functionRegistry);
                 Operation operation = astBuilder.Build(tokens);
 
                 ShowAbstractSyntaxTree(operation);
@@ -55,7 +55,7 @@ namespace Jace.DemoApp
                     variables.Add(variable.Name, value);
                 }
 
-                IExecutor executor = new Interpreter();
+                IExecutor<double> executor = new Interpreter();
                 double result = executor.Execute(operation, null, variables);
 
                 resultTextBox.Text = "" + result;
@@ -171,7 +171,7 @@ namespace Jace.DemoApp
             }
             else
             {
-                FloatingPointConstant floatingPointConstant = operation as FloatingPointConstant;
+               var floatingPointConstant = operation as FloatingPointConstant<double>;
                 if (floatingPointConstant != null)
                 {
                     value = "(" + floatingPointConstant.Value + ")";

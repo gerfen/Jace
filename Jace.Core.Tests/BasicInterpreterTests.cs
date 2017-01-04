@@ -34,7 +34,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry functionRegistry = new MockFunctionRegistry();
 
-            IExecutor executor = new Interpreter();
+            var executor = new Interpreter();
             double result = executor.Execute(new Subtraction(
                 DataType.Integer,
                 new IntegerConstant(6),
@@ -55,7 +55,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry functionRegistry = new MockFunctionRegistry();
 
-            IExecutor executor = new Interpreter();
+            var executor = new Interpreter();
             // 6 + (2 * 4)
             double result = executor.Execute(
                 new Addition(
@@ -85,7 +85,7 @@ namespace Jace.Tests
             variables.Add("var1", 2);
             variables.Add("age", 4);
 
-            IExecutor interpreter = new Interpreter();
+            var interpreter = new Interpreter();
             // var1 + 2 * (3 * age)
             double result = interpreter.Execute(
                 new Addition(DataType.FloatingPoint,

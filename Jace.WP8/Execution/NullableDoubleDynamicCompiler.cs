@@ -11,40 +11,40 @@ using Jace.Util;
 namespace Jace.Execution
 {
 #if !NETFX_CORE && !NETCORE
-    public class DynamicCompiler : IExecutor<double>
+    public class NullableDoubleDynamicCompiler : IExecutor<double?>
     {
-        public double Execute(Operation operation, IFunctionRegistry functionRegistry)
+        public double? Execute(Operation operation, IFunctionRegistry functionRegistry)
         {
-            return Execute(operation, functionRegistry, new Dictionary<string, double>());
+            return Execute(operation, functionRegistry, new Dictionary<string, double?>());
         }
 
-        public double Execute(Operation operation, IFunctionRegistry functionRegistry, 
-            IDictionary<string, double> variables)
+        public double? Execute(Operation operation, IFunctionRegistry functionRegistry, 
+            IDictionary<string, double?> variables)
         {
             return BuildFormula(operation, functionRegistry)(variables);
         }
 
-        public Func<IDictionary<string, double>, double> BuildFormula(Operation operation,
+        public Func<IDictionary<string, double?>, double?> BuildFormula(Operation operation,
             IFunctionRegistry functionRegistry)
         {
-            Func<FormulaContext<double>, double> func = BuildFormulaInternal(operation, functionRegistry);
+            Func<FormulaContext<double?>, double?> func = BuildFormulaInternal(operation, functionRegistry);
             return variables =>
                 {
                     variables = EngineUtil.ConvertVariableNamesToLowerCase(variables);
-                    var context = new FormulaContext<double>(variables, functionRegistry);
+                    var context = new FormulaContext<double?>(variables, functionRegistry);
                     return func(context);
                 };
         }
 
-        private Func<FormulaContext<double>, double> BuildFormulaInternal(Operation operation,
+        private Func<FormulaContext<double?>, double?> BuildFormulaInternal(Operation operation,
             IFunctionRegistry functionRegistry)
         {
-            DynamicMethod method = new DynamicMethod("MyCalcMethod", typeof(double),
-                new Type[] { typeof(FormulaContext<double>) });
+            DynamicMethod method = new DynamicMethod("MyCalcMethod", typeof(double?),
+                new Type[] { typeof(FormulaContext<double?>) });
             GenerateMethodBody(method, operation, functionRegistry);
 
-            Func<FormulaContext<double>, double> function =
-                (Func<FormulaContext<double>, double>)method.CreateDelegate(typeof(Func<FormulaContext<double>, double>));
+            Func<FormulaContext<double?>, double?> function =
+                (Func<FormulaContext<double?>, double?>)method.CreateDelegate(typeof(Func<FormulaContext<double?>, double?>));
 
             return function;
         }
@@ -53,7 +53,7 @@ namespace Jace.Execution
             IFunctionRegistry functionRegistry)
         {
             ILGenerator generator = method.GetILGenerator();
-            generator.DeclareLocal(typeof(double));
+            generator.DeclareLocal(typeof(double?));
             generator.DeclareLocal(typeof(object[]));
             GenerateMethodBody(generator, operation, functionRegistry);
             generator.Emit(OpCodes.Ret);
@@ -72,15 +72,15 @@ namespace Jace.Execution
                 generator.Emit(OpCodes.Ldc_I4, constant.Value);
                 generator.Emit(OpCodes.Conv_R8);
             }
-            else if (operation.GetType() == typeof(FloatingPointConstant<double>))
+            else if (operation.GetType() == typeof(FloatingPointConstant<double?>))
             {
-                var constant = (FloatingPointConstant<double>)operation;
+                var constant = (FloatingPointConstant<double?>)operation;
 
-                generator.Emit(OpCodes.Ldc_R8, constant.Value);
+                generator.Emit(OpCodes.Ldc_R8, constant.Value.Value);
             }
             else if (operation.GetType() == typeof(Variable))
             {
-                Type dictionaryType = typeof(IDictionary<string, double>);
+                Type dictionaryType = typeof(IDictionary<string, double?>);
 
                 Variable variable = (Variable)operation;
 
@@ -88,10 +88,10 @@ namespace Jace.Execution
                 Label returnLabel = generator.DefineLabel();
 
                 generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Callvirt, typeof(FormulaContext<double>).GetProperty("Variables").GetGetMethod());
+                generator.Emit(OpCodes.Callvirt, typeof(FormulaContext<double?>).GetProperty("Variables").GetGetMethod());
                 generator.Emit(OpCodes.Ldstr, variable.Name);
                 generator.Emit(OpCodes.Ldloca_S, (byte)0);
-                generator.Emit(OpCodes.Callvirt, dictionaryType.GetMethod("TryGetValue", new Type[] { typeof(string), typeof(double).MakeByRefType() }));
+                generator.Emit(OpCodes.Callvirt, dictionaryType.GetMethod("TryGetValue", new Type[] { typeof(string), typeof(double?).MakeByRefType() }));
                 generator.Emit(OpCodes.Ldc_I4_0);
                 generator.Emit(OpCodes.Ceq);
                 generator.Emit(OpCodes.Brtrue_S, throwExceptionLabel);
@@ -271,7 +271,7 @@ namespace Jace.Execution
                 Type funcType = GetFuncType(functionInfo.NumberOfParameters);
 
                 generator.Emit(OpCodes.Ldarg_0);
-                generator.Emit(OpCodes.Callvirt, typeof(FormulaContext<double>).GetProperty("FunctionRegistry").GetGetMethod());
+                generator.Emit(OpCodes.Callvirt, typeof(FormulaContext<double?>).GetProperty("FunctionRegistry").GetGetMethod());
                 generator.Emit(OpCodes.Ldstr, function.FunctionName);
                 generator.Emit(OpCodes.Callvirt, typeof(IFunctionRegistry).GetMethod("GetFunctionInfo", new Type[] { typeof(string) }));
                 generator.Emit(OpCodes.Callvirt, typeof(FunctionInfo).GetProperty("Function").GetGetMethod());
@@ -295,45 +295,45 @@ namespace Jace.Execution
 
             Type[] typeArguments = new Type[numberOfParameters + 1];
             for (int i = 0; i < typeArguments.Length; i++)
-                typeArguments[i] = typeof(double);
+                typeArguments[i] = typeof(double?);
 
             return funcType.MakeGenericType(typeArguments);
         }
     }
 #else
-    public class DynamicCompiler : IExecutor<double>
+    public class NullableDoubleDynamicCompiler : IExecutor<double?>
     {
-        public double Execute(Operation operation, IFunctionRegistry functionRegistry)
+        public double? Execute(Operation operation, IFunctionRegistry functionRegistry)
         {
-            return Execute(operation, functionRegistry, new Dictionary<string, double>());
+            return Execute(operation, functionRegistry, new Dictionary<string, double?>());
         }
 
-        public double Execute(Operation operation, IFunctionRegistry functionRegistry, 
-            IDictionary<string, double> variables)
+        public double? Execute(Operation operation, IFunctionRegistry functionRegistry, 
+            IDictionary<string, double?> variables)
         {
             return BuildFormula(operation, functionRegistry)(variables);
         }
 
-        public Func<IDictionary<string, double>, double> BuildFormula(Operation operation,
+        public Func<IDictionary<string, double?>, double?> BuildFormula(Operation operation,
             IFunctionRegistry functionRegistry)
         {
-            Func<FormulaContext<double>, double> func = BuildFormulaInternal(operation, functionRegistry);
+            Func<FormulaContext<double?>, double?> func = BuildFormulaInternal(operation, functionRegistry);
             return variables =>
                 {
                     variables = EngineUtil.ConvertVariableNamesToLowerCase(variables);
-                    var context = new FormulaContext<double>(variables, functionRegistry);
+                    var context = new FormulaContext<double?>(variables, functionRegistry);
                     return func(context);
                 };
         }
 
-        private Func<FormulaContext<double>, double> BuildFormulaInternal(Operation operation, 
+        private Func<FormulaContext<double?>, double?> BuildFormulaInternal(Operation operation, 
             IFunctionRegistry functionRegistry)
         {
-            ParameterExpression contextParameter = Expression.Parameter(typeof(FormulaContext<double>), "context");
+            ParameterExpression contextParameter = Expression.Parameter(typeof(FormulaContext<double?>), "context");
 
-            LabelTarget returnLabel = Expression.Label(typeof(double));
+            LabelTarget returnLabel = Expression.Label(typeof(double?));
 
-            return Expression.Lambda<Func<FormulaContext<double>, double>>(
+            return Expression.Lambda<Func<FormulaContext<double?>, double?>>(
                 Expression.Block(
                     Expression.Return(returnLabel, GenerateMethodBody(operation, contextParameter, functionRegistry)),
                     Expression.Label(returnLabel, Expression.Constant(0.0))
@@ -352,26 +352,26 @@ namespace Jace.Execution
             {
                 IntegerConstant constant = (IntegerConstant)operation;
 
-                return Expression.Convert(Expression.Constant(constant.Value, typeof(int)), typeof(double));
+                return Expression.Convert(Expression.Constant(constant.Value, typeof(int)), typeof(double?));
             }
-            else if (operation.GetType() == typeof(FloatingPointConstant<double>))
+            else if (operation.GetType() == typeof(FloatingPointConstant<double?>))
             {
-                var constant = (FloatingPointConstant<double>)operation;
+                var constant = (FloatingPointConstant<double?>)operation;
 
-                return Expression.Constant(constant.Value, typeof(double));
+                return Expression.Constant(constant.Value, typeof(double?));
             }
             else if (operation.GetType() == typeof(Variable))
             {
-                Type contextType = typeof(FormulaContext<double>);
-                Type dictionaryType = typeof(IDictionary<string, double>);
+                Type contextType = typeof(FormulaContext<double?>);
+                Type dictionaryType = typeof(IDictionary<string, double?>);
 
                 Variable variable = (Variable)operation;
 
                 Expression getVariables = Expression.Property(contextParameter, "Variables");
-                ParameterExpression value = Expression.Variable(typeof(double), "value");
+                ParameterExpression value = Expression.Variable(typeof(double?), "value");
 
                 Expression variableFound = Expression.Call(getVariables,
-                    dictionaryType.GetRuntimeMethod("TryGetValue", new Type[] { typeof(string), typeof(double).MakeByRefType() }),
+                    dictionaryType.GetRuntimeMethod("TryGetValue", new Type[] { typeof(string), typeof(double?).MakeByRefType() }),
                     Expression.Constant(variable.Name),
                     value);
 
@@ -379,7 +379,7 @@ namespace Jace.Execution
                     Expression.New(typeof(VariableNotDefinedException).GetConstructor(new Type[] { typeof(string) }),
                         Expression.Constant(string.Format("The variable \"{0}\" used is not defined.", variable.Name))));
 
-                LabelTarget returnLabel = Expression.Label(typeof(double));
+                LabelTarget returnLabel = Expression.Label(typeof(double?));
 
                 return Expression.Block(
                     new[] { value },
@@ -437,7 +437,7 @@ namespace Jace.Execution
                 Expression @base = GenerateMethodBody(exponentation.Base, contextParameter, functionRegistry);
                 Expression exponent = GenerateMethodBody(exponentation.Exponent, contextParameter, functionRegistry);
 
-                return Expression.Call(null, typeof(Math).GetRuntimeMethod("Pow", new Type[] { typeof(double), typeof(double) }), @base, exponent);
+                return Expression.Call(null, typeof(Math).GetRuntimeMethod("Pow", new Type[] { typeof(double?), typeof(double?) }), @base, exponent);
             }
             else if (operation.GetType() == typeof(UnaryMinus))
             {
@@ -512,7 +512,7 @@ namespace Jace.Execution
                 FunctionInfo functionInfo = functionRegistry.GetFunctionInfo(function.FunctionName);
                 Type funcType = GetFuncType(functionInfo.NumberOfParameters);
                 Type[] parameterTypes = (from i in Enumerable.Range(0, functionInfo.NumberOfParameters)
-                                            select typeof(double)).ToArray();
+                                            select typeof(double?)).ToArray();
 
                 Expression[] arguments = new Expression[functionInfo.NumberOfParameters];
                 for (int i = 0; i < functionInfo.NumberOfParameters; i++)
@@ -546,7 +546,7 @@ namespace Jace.Execution
 
             Type[] typeArguments = new Type[numberOfParameters + 1];
             for (int i = 0; i < typeArguments.Length; i++)
-                typeArguments[i] = typeof(double);
+                typeArguments[i] = typeof(double?);
 
             return funcType.MakeGenericType(typeArguments);
         }

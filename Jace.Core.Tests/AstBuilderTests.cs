@@ -35,7 +35,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = '(', TokenType = TokenType.LeftBracket }, 
                 new Token() { Value = 42, TokenType = TokenType.Integer }, 
@@ -69,7 +69,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() {
                 new Token() { Value = 2, TokenType = TokenType.Integer }, 
                 new Token() { Value = '+', TokenType = TokenType.Operation }, 
@@ -100,7 +100,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() {
                 new Token() { Value = 2, TokenType = TokenType.Integer }, 
                 new Token() { Value = '*', TokenType = TokenType.Operation }, 
@@ -131,7 +131,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 10, TokenType = TokenType.Integer }, 
                 new Token() { Value = '/', TokenType = TokenType.Operation }, 
@@ -161,7 +161,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 10, TokenType = TokenType.Integer }, 
                 new Token() { Value = '*', TokenType = TokenType.Operation }, 
@@ -171,10 +171,10 @@ namespace Jace.Tests
             Multiplication multiplication = (Multiplication)operation;
 #if !NETCORE
             Assert.AreEqual(new IntegerConstant(10), multiplication.Argument1);
-            Assert.AreEqual(new FloatingPointConstant(2.0), multiplication.Argument2);
+            Assert.AreEqual(new FloatingPointConstant<double>(2.0), multiplication.Argument2);
 #else
             Assert.Equal(new IntegerConstant(10), multiplication.Argument1);
-            Assert.Equal(new FloatingPointConstant(2.0), multiplication.Argument2);
+            Assert.Equal(new FloatingPointConstant<double>(2.0), multiplication.Argument2);
 #endif
         }
 
@@ -187,7 +187,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 2, TokenType = TokenType.Integer }, 
                 new Token() { Value = '^', TokenType = TokenType.Operation }, 
@@ -213,7 +213,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 2.7, TokenType = TokenType.FloatingPoint }, 
                 new Token() { Value = '%', TokenType = TokenType.Operation }, 
@@ -222,10 +222,10 @@ namespace Jace.Tests
 
             Modulo modulo = (Modulo)operation;
 #if !NETCORE
-            Assert.AreEqual(new FloatingPointConstant(2.7), modulo.Dividend);
+            Assert.AreEqual(new FloatingPointConstant<double>(2.7), modulo.Dividend);
             Assert.AreEqual(new IntegerConstant(3), modulo.Divisor);
 #else
-            Assert.Equal(new FloatingPointConstant(2.7), modulo.Dividend);
+            Assert.Equal(new FloatingPointConstant<double>(2.7), modulo.Dividend);
             Assert.Equal(new IntegerConstant(3), modulo.Divisor);
 #endif
         }
@@ -239,7 +239,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 10, TokenType = TokenType.Integer }, 
                 new Token() { Value = '*', TokenType = TokenType.Operation }, 
@@ -265,7 +265,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = "var1", TokenType = TokenType.Text }, 
                 new Token() { Value = '+', TokenType = TokenType.Operation }, 
@@ -304,7 +304,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = "sin", TokenType = TokenType.Text }, 
                 new Token() { Value = '(', TokenType = TokenType.LeftBracket }, 
@@ -329,7 +329,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = "sin", TokenType = TokenType.Text }, 
                 new Token() { Value = '(', TokenType = TokenType.LeftBracket }, 
@@ -363,7 +363,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = "sin", TokenType = TokenType.Text }, 
                 new Token() { Value = '(', TokenType = TokenType.LeftBracket }, 
@@ -384,11 +384,11 @@ namespace Jace.Tests
 #if !NETCORE
             Assert.AreEqual(new IntegerConstant(2), addition.Argument1);
             Assert.AreEqual(new IntegerConstant(3), addition.Argument2);
-            Assert.AreEqual(new FloatingPointConstant(4.9), multiplication.Argument2);
+            Assert.AreEqual(new FloatingPointConstant<double>(4.9), multiplication.Argument2);
 #else
             Assert.Equal(new IntegerConstant(2), addition.Argument1);
             Assert.Equal(new IntegerConstant(3), addition.Argument2);
-            Assert.Equal(new FloatingPointConstant(4.9), multiplication.Argument2);
+            Assert.Equal(new FloatingPointConstant<double>(4.9), multiplication.Argument2);
 #endif
         }
 
@@ -401,7 +401,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
             Operation operation = builder.Build(new List<Token>() { 
                 new Token() { Value = 5.3, TokenType = TokenType.FloatingPoint }, 
                 new Token() { Value = '*', TokenType = TokenType.Operation}, 
@@ -416,9 +416,9 @@ namespace Jace.Tests
             Multiplication multiplication = (Multiplication)operation;
 
 #if !NETCORE
-            Assert.AreEqual(new FloatingPointConstant(5.3), multiplication.Argument1);
+            Assert.AreEqual(new FloatingPointConstant<double>(5.3), multiplication.Argument1);
 #else
-            Assert.Equal(new FloatingPointConstant(5.3), multiplication.Argument1);
+            Assert.Equal(new FloatingPointConstant<double>(5.3), multiplication.Argument1);
 #endif
             UnaryMinus unaryMinus = (UnaryMinus)multiplication.Argument2;
             Addition addition = (Addition)unaryMinus.Argument;
@@ -441,7 +441,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
 
 #if !NETCORE
             AssertExtensions.ThrowsException<ParseException>(() =>
@@ -479,7 +479,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
 #if !NETCORE
             AssertExtensions.ThrowsException<ParseException>(() =>
                 {
@@ -516,7 +516,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
 #if !NETCORE
             AssertExtensions.ThrowsException<ParseException>(() =>
                 {
@@ -549,7 +549,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
 #if !NETCORE
             AssertExtensions.ThrowsException<ParseException>(() =>
                 {
@@ -582,7 +582,7 @@ namespace Jace.Tests
         {
             IFunctionRegistry registry = new MockFunctionRegistry();
 
-            AstBuilder builder = new AstBuilder(registry);
+            var builder = new AstBuilder<double>(registry);
 #if !NETCORE
             AssertExtensions.ThrowsException<ParseException>(() =>
                 {

@@ -44,19 +44,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\Jace.Core\AstBuilder.cs">
       <Link>AstBuilder.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\CalculationEngine.cs">
       <Link>CalculationEngine.cs</Link>
     </Compile>
+    <Compile Include="..\Jace.Core\CalculationEngineBase.cs">
+      <Link>CalculationEngineBase.cs</Link>
+    </Compile>
     <Compile Include="..\Jace.Core\DataType.cs">
       <Link>DataType.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\DecimalCalculationEngine.cs">
+      <Link>DecimalCalculationEngine.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\Execution\ConstantInfo.cs">
       <Link>Execution\ConstantInfo.cs</Link>
@@ -64,11 +65,20 @@
     <Compile Include="..\Jace.Core\Execution\ConstantRegistry.cs">
       <Link>Execution\ConstantRegistry.cs</Link>
     </Compile>
+    <Compile Include="..\Jace.Core\Execution\DecimalNumericalOperations.cs">
+      <Link>Execution\DecimalNumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\DoubleNumericalOperations.cs">
+      <Link>Execution\DoubleNumericalOperations.cs</Link>
+    </Compile>
     <Compile Include="..\Jace.Core\Execution\DynamicCompiler.cs">
       <Link>Execution\DynamicCompiler.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\Execution\ExecutionMode.cs">
       <Link>Execution\ExecutionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ExpressionExecutor.cs">
+      <Link>Execution\ExpressionExecutor.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\Execution\FormulaBuilder.cs">
       <Link>Execution\FormulaBuilder.cs</Link>
@@ -91,11 +101,23 @@
     <Compile Include="..\Jace.Core\Execution\Interpreter.cs">
       <Link>Execution\Interpreter.cs</Link>
     </Compile>
+    <Compile Include="..\Jace.Core\Execution\INumericalOperations.cs">
+      <Link>Execution\INumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\NullableDoubleDynamicCompiler.cs">
+      <Link>Execution\NullableDoubleDynamicCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\NullableDoubleNumericalOperations.cs">
+      <Link>Execution\NullableDoubleNumericalOperations.cs</Link>
+    </Compile>
     <Compile Include="..\Jace.Core\Execution\ParameterInfo.cs">
       <Link>Execution\ParameterInfo.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\FormulaContext.cs">
       <Link>FormulaContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\ICalculationEngine.cs">
+      <Link>Execution\ICalculationEngine.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\Operations\Addition.cs">
       <Link>Operations\Addition.cs</Link>

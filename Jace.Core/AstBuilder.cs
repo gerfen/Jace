@@ -8,7 +8,7 @@ using Jace.Tokenizer;
 
 namespace Jace
 {
-    public class AstBuilder
+    public class AstBuilder<T>
     {
         private readonly IFunctionRegistry functionRegistry;
 
@@ -51,7 +51,7 @@ namespace Jace
                         resultStack.Push(new IntegerConstant((int)token.Value));
                         break;
                     case TokenType.FloatingPoint:
-                        resultStack.Push(new FloatingPointConstant((double)token.Value));
+                        resultStack.Push(new FloatingPointConstant<T>((T)token.Value));
                         break;
                     case TokenType.Text:
                         if (functionRegistry.IsFunctionName((string)token.Value))
@@ -299,9 +299,9 @@ namespace Jace
                         IntegerConstant constant = (IntegerConstant)operation;
                         throw new ParseException(string.Format("Unexpected integer constant \"{0}\" found.", constant.Value));
                     }
-                    else if (operation.GetType() == typeof(FloatingPointConstant))
+                    else if (operation.GetType() == typeof(FloatingPointConstant<T>))
                     {
-                        FloatingPointConstant constant = (FloatingPointConstant)operation;
+                        FloatingPointConstant<T> constant = (FloatingPointConstant<T>)operation;
                         throw new ParseException(string.Format("Unexpected floating point constant \"{0}\" found.", constant.Value)); 
                     }
                 }

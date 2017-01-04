@@ -102,138 +102,165 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-      <Compile Include="..\Jace.Core\AstBuilder.cs">
-        <Link>AstBuilder.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\CalculationEngine.cs">
-        <Link>CalculationEngine.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\DataType.cs">
-        <Link>DataType.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\ConstantInfo.cs">
-        <Link>Execution\ConstantInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\ConstantRegistry.cs">
-        <Link>Execution\ConstantRegistry.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\DynamicCompiler.cs">
-        <Link>Execution\DynamicCompiler.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\ExecutionMode.cs">
-        <Link>Execution\ExecutionMode.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\FormulaBuilder.cs">
-        <Link>Execution\FormulaBuilder.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\FunctionInfo.cs">
-        <Link>Execution\FunctionInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\FunctionRegistry.cs">
-        <Link>Execution\FunctionRegistry.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\IConstantRegistry.cs">
-        <Link>Execution\IConstantRegistry.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\IExecutor.cs">
-        <Link>Execution\IExecutor.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\IFunctionRegistry.cs">
-        <Link>Execution\IFunctionRegistry.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\Interpreter.cs">
-        <Link>Execution\Interpreter.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Execution\ParameterInfo.cs">
-        <Link>Execution\ParameterInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\FormulaContext.cs">
-        <Link>FormulaContext.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Addition.cs">
-        <Link>Operations\Addition.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Constant.cs">
-        <Link>Operations\Constant.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Division.cs">
-        <Link>Operations\Division.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Equal.cs">
-        <Link>Operations\Equal.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Exponentiation.cs">
-        <Link>Operations\Exponentiation.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Function.cs">
-        <Link>Operations\Function.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\GreaterOrEqualThan.cs">
-        <Link>Operations\GreaterOrEqualThan.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\GreaterThan.cs">
-        <Link>Operations\GreaterThan.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\LessOrEqualThan.cs">
-        <Link>Operations\LessOrEqualThan.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\LessThan.cs">
-        <Link>Operations\LessThan.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Modulo.cs">
-        <Link>Operations\Modulo.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Multiplication.cs">
-        <Link>Operations\Multiplication.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\NotEqual.cs">
-        <Link>Operations\NotEqual.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Operation.cs">
-        <Link>Operations\Operation.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Subtraction.cs">
-        <Link>Operations\Subtraction.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\UnaryMinus.cs">
-        <Link>Operations\UnaryMinus.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Operations\Variable.cs">
-        <Link>Operations\Variable.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Optimizer.cs">
-        <Link>Optimizer.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\ParseException.cs">
-        <Link>ParseException.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Tokenizer\Token.cs">
-        <Link>Tokenizer\Token.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Tokenizer\TokenReader.cs">
-        <Link>Tokenizer\TokenReader.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Tokenizer\TokenType.cs">
-        <Link>Tokenizer\TokenType.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Util\EngineUtil.cs">
-        <Link>Util\EngineUtil.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Util\FuncAdapter.cs">
-        <Link>Util\FuncAdapter.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Util\MathUtil.cs">
-        <Link>Util\MathUtil.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Util\MemoryCache.cs">
-        <Link>Util\MemoryCache.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\Util\TypeExtensions.cs">
-        <Link>Util\TypeExtensions.cs</Link>
-      </Compile>
-      <Compile Include="..\Jace.Core\VariableNotDefinedException.cs">
-        <Link>VariableNotDefinedException.cs</Link>
-      </Compile>
+    <Compile Include="..\Jace.Core\AstBuilder.cs">
+      <Link>AstBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\CalculationEngine.cs">
+      <Link>CalculationEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\CalculationEngineBase.cs">
+      <Link>CalculationEngineBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\DataType.cs">
+      <Link>DataType.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\DecimalCalculationEngine.cs">
+      <Link>DecimalCalculationEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ConstantInfo.cs">
+      <Link>Execution\ConstantInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ConstantRegistry.cs">
+      <Link>Execution\ConstantRegistry.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\DecimalNumericalOperations.cs">
+      <Link>Execution\DecimalNumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\DoubleNumericalOperations.cs">
+      <Link>Execution\DoubleNumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\DynamicCompiler.cs">
+      <Link>Execution\DynamicCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ExecutionMode.cs">
+      <Link>Execution\ExecutionMode.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ExpressionExecutor.cs">
+      <Link>Execution\ExpressionExecutor.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\FormulaBuilder.cs">
+      <Link>Execution\FormulaBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\FunctionInfo.cs">
+      <Link>Execution\FunctionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\FunctionRegistry.cs">
+      <Link>Execution\FunctionRegistry.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\IConstantRegistry.cs">
+      <Link>Execution\IConstantRegistry.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\IExecutor.cs">
+      <Link>Execution\IExecutor.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\IFunctionRegistry.cs">
+      <Link>Execution\IFunctionRegistry.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\Interpreter.cs">
+      <Link>Execution\Interpreter.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\INumericalOperations.cs">
+      <Link>Execution\INumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\NullableDoubleDynamicCompiler.cs">
+      <Link>Execution\NullableDoubleDynamicCompiler.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\NullableDoubleNumericalOperations.cs">
+      <Link>Execution\NullableDoubleNumericalOperations.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Execution\ParameterInfo.cs">
+      <Link>Execution\ParameterInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\FormulaContext.cs">
+      <Link>FormulaContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\ICalculationEngine.cs">
+      <Link>ICalculationEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Addition.cs">
+      <Link>Operations\Addition.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Constant.cs">
+      <Link>Operations\Constant.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Division.cs">
+      <Link>Operations\Division.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Equal.cs">
+      <Link>Operations\Equal.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Exponentiation.cs">
+      <Link>Operations\Exponentiation.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Function.cs">
+      <Link>Operations\Function.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\GreaterOrEqualThan.cs">
+      <Link>Operations\GreaterOrEqualThan.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\GreaterThan.cs">
+      <Link>Operations\GreaterThan.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\LessOrEqualThan.cs">
+      <Link>Operations\LessOrEqualThan.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\LessThan.cs">
+      <Link>Operations\LessThan.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Modulo.cs">
+      <Link>Operations\Modulo.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Multiplication.cs">
+      <Link>Operations\Multiplication.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\NotEqual.cs">
+      <Link>Operations\NotEqual.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Operation.cs">
+      <Link>Operations\Operation.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Subtraction.cs">
+      <Link>Operations\Subtraction.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\UnaryMinus.cs">
+      <Link>Operations\UnaryMinus.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Operations\Variable.cs">
+      <Link>Operations\Variable.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Optimizer.cs">
+      <Link>Optimizer.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\ParseException.cs">
+      <Link>ParseException.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Tokenizer\Token.cs">
+      <Link>Tokenizer\Token.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Tokenizer\TokenReader.cs">
+      <Link>Tokenizer\TokenReader.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Tokenizer\TokenType.cs">
+      <Link>Tokenizer\TokenType.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Util\EngineUtil.cs">
+      <Link>Util\EngineUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Util\FuncAdapter.cs">
+      <Link>Util\FuncAdapter.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Util\MathUtil.cs">
+      <Link>Util\MathUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Util\MemoryCache.cs">
+      <Link>Util\MemoryCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\Util\TypeExtensions.cs">
+      <Link>Util\TypeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\VariableNotDefinedException.cs">
+      <Link>VariableNotDefinedException.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

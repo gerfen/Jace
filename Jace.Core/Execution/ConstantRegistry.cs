@@ -2,24 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Jace.Execution
 {
-    public class ConstantRegistry : IConstantRegistry
+    public class ConstantRegistry : ConstantRegistry<double>
     {
-        private readonly bool caseSensitive;
-        private readonly Dictionary<string, ConstantInfo> constants;
+        public ConstantRegistry(bool caseSensitive) : base(caseSensitive)
+        {
+
+        }
+    }
+
+
+    public class ConstantRegistry<T> : IConstantRegistry<T>
+    {
+        private readonly bool _caseSensitive;
+        private readonly Dictionary<string, ConstantInfo<T>> _constants;
 
         public ConstantRegistry(bool caseSensitive)
         {
-            this.caseSensitive = caseSensitive;
-            this.constants = new Dictionary<string, ConstantInfo>();
+            _caseSensitive = caseSensitive;
+            _constants = new Dictionary<string, ConstantInfo<T>>();
+
         }
 
-        public IEnumerator<ConstantInfo> GetEnumerator()
+        public IEnumerator<ConstantInfo<T>> GetEnumerator()
         {
-            return constants.Select(p => p.Value).ToList().GetEnumerator();
+            return _constants.Select(p => p.Value).ToList().GetEnumerator();
         }
 
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -27,52 +36,63 @@ namespace Jace.Execution
             return this.GetEnumerator();
         }
 
-        public ConstantInfo GetConstantInfo(string constantName)
+        public ConstantInfo<T> GetConstantInfo(string constantName)
         {
             if (string.IsNullOrEmpty(constantName))
+            {
                 throw new ArgumentNullException("constantName");
+            }
 
-            ConstantInfo constantInfo = null;
-            return constants.TryGetValue(ConvertConstantName(constantName), out constantInfo) ? constantInfo : null;
+            ConstantInfo<T> constantInfo = null;
+            return _constants.TryGetValue(ConvertConstantName(constantName), out constantInfo) ? constantInfo : null;
         }
 
         public bool IsConstantName(string constantName)
         {
             if (string.IsNullOrEmpty(constantName))
+            {
                 throw new ArgumentNullException("constantName");
+            }
 
-            return constants.ContainsKey(ConvertConstantName(constantName));
+            return _constants.ContainsKey(ConvertConstantName(constantName));
         }
 
-        public void RegisterConstant(string constantName, double value)
+        public void RegisterConstant(string constantName, T value)
         {
             RegisterConstant(constantName, value, true);
         }
 
-        public void RegisterConstant(string constantName, double value, bool isOverWritable)
+        public void RegisterConstant(string constantName, T value, bool isOverWritable)
         {
-            if(string.IsNullOrEmpty(constantName))
+            if (string.IsNullOrEmpty(constantName))
+            {
                 throw new ArgumentNullException("constantName");
+            }
 
             constantName = ConvertConstantName(constantName);
 
-            if (constants.ContainsKey(constantName) && !constants[constantName].IsOverWritable)
+            if (_constants.ContainsKey(constantName) && !_constants[constantName].IsOverWritable)
             {
                 string message = string.Format("The constant \"{0}\" cannot be overwriten.", constantName);
                 throw new Exception(message);
             }
 
-            ConstantInfo constantInfo = new ConstantInfo(constantName, value, isOverWritable);
+            var constantInfo = new ConstantInfo<T>(constantName, value, isOverWritable);
 
-            if (constants.ContainsKey(constantName))
-                constants[constantName] = constantInfo;
+            if (_constants.ContainsKey(constantName))
+            {
+                _constants[constantName] = constantInfo;
+            }
             else
-                constants.Add(constantName, constantInfo);
+            {
+                _constants.Add(constantName, constantInfo);
+            }
+                
         }
 
         private string ConvertConstantName(string constantName)
         {
-            return caseSensitive ? constantName : constantName.ToLowerInvariant();
+            return _caseSensitive ? constantName : constantName.ToLowerInvariant();
         }
     }
 }

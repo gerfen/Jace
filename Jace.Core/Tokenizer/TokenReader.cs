@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
+using Jace.Execution;
 
 namespace Jace.Tokenizer
 {
     /// <summary>
     /// A token reader that converts the input string in a list of tokens.
     /// </summary>
-    public class TokenReader
+    public class TokenReader<T>
     {
         private readonly CultureInfo cultureInfo;
         private readonly char decimalSeparator;
         private readonly char argumentSeparator;
+        private readonly INumericalOperations<T> numericalOperations;
 
-        public TokenReader() 
-            : this(CultureInfo.CurrentCulture)
+        public TokenReader(INumericalOperations<T> numericalOperations)
+            : this(CultureInfo.CurrentCulture, numericalOperations)
         {
         }
 
-        public TokenReader(CultureInfo cultureInfo)
+        public TokenReader(CultureInfo cultureInfo, INumericalOperations<T> numericalOperations)
         {
             this.cultureInfo = cultureInfo;
             this.decimalSeparator = cultureInfo.NumberFormat.NumberDecimalSeparator[0];
             this.argumentSeparator = cultureInfo.TextInfo.ListSeparator[0];
+            this.numericalOperations = numericalOperations;
         }
 
         /// <summary>
@@ -39,12 +40,10 @@ namespace Jace.Tokenizer
                 throw new ArgumentNullException("formula");
 
             List<Token> tokens = new List<Token>();
-
             char[] characters = formula.ToCharArray();
-
             bool isFormulaSubPart = true;
 
-            for(int i = 0; i < characters.Length; i++)
+            for (int i = 0; i < characters.Length; i++)
             {
                 if (IsPartOfNumeric(characters[i], true, isFormulaSubPart))
                 {
@@ -60,22 +59,39 @@ namespace Jace.Tokenizer
                     int intValue;
                     if (int.TryParse(buffer, out intValue))
                     {
-                        tokens.Add(new Token() { TokenType = TokenType.Integer, Value = intValue, StartPosition = startPosition, Length = i - startPosition });
+                        tokens.Add(new Token()
+                        {
+                            TokenType = TokenType.Integer,
+                            Value = intValue,
+                            StartPosition = startPosition,
+                            Length = i - startPosition
+                        });
                         isFormulaSubPart = false;
                     }
                     else
                     {
-                        double doubleValue;
-                        if (double.TryParse(buffer, NumberStyles.Float | NumberStyles.AllowThousands,
-                            cultureInfo, out doubleValue))
+                        T floatingPointValue;
+                        if (this.numericalOperations.TryParseFloatingPoint(buffer, cultureInfo, out floatingPointValue))
                         {
-                            tokens.Add(new Token() { TokenType = TokenType.FloatingPoint, Value = doubleValue, StartPosition = startPosition, Length = i - startPosition });
+                            tokens.Add(new Token()
+                            {
+                                TokenType = TokenType.FloatingPoint,
+                                Value = floatingPointValue,
+                                StartPosition = startPosition,
+                                Length = i - startPosition
+                            });
                             isFormulaSubPart = false;
                         }
                         else if (buffer == "-")
                         {
                             // Verify if we have a unary minus, we use the token '_' for a unary minus in the AST builder
-                            tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '_', StartPosition = startPosition, Length = 1 });
+                            tokens.Add(new Token()
+                            {
+                                TokenType = TokenType.Operation,
+                                Value = '_',
+                                StartPosition = startPosition,
+                                Length = 1
+                            });
                         }
                         // Else we skip
                     }
@@ -97,24 +113,38 @@ namespace Jace.Tokenizer
                         buffer += characters[i];
                     }
 
-                    tokens.Add(new Token() { TokenType = TokenType.Text, Value = buffer, StartPosition = startPosition, Length = i -startPosition });
+                    tokens.Add(new Token()
+                    {
+                        TokenType = TokenType.Text,
+                        Value = buffer,
+                        StartPosition = startPosition,
+                        Length = i - startPosition
+                    });
                     isFormulaSubPart = false;
 
                     if (i == characters.Length)
+
                     {
                         // Last character read
                         continue;
                     }
                 }
+
                 if (characters[i] == this.argumentSeparator)
                 {
-                    tokens.Add(new Token() { TokenType = Tokenizer.TokenType.ArgumentSeparator, Value = characters[i], StartPosition = i, Length = 1 });
+                    tokens.Add(new Token()
+                    {
+                        TokenType = Tokenizer.TokenType.ArgumentSeparator,
+                        Value = characters[i],
+                        StartPosition = i,
+                        Length = 1
+                    });
                     isFormulaSubPart = false;
                 }
                 else
                 {
                     switch (characters[i])
-                    { 
+                    {
                         case ' ':
                             continue;
                         case '+':
@@ -129,56 +159,121 @@ namespace Jace.Tokenizer
                             if (IsUnaryMinus(characters[i], tokens))
                             {
                                 // We use the token '_' for a unary minus in the AST builder
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '_', StartPosition = i, Length = 1 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '_',
+                                    StartPosition = i,
+                                    Length = 1
+                                });
                             }
                             else
                             {
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = characters[i], StartPosition = i, Length = 1 });                            
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = characters[i],
+                                    StartPosition = i,
+                                    Length = 1
+                                });
                             }
                             isFormulaSubPart = true;
                             break;
                         case '(':
-                            tokens.Add(new Token() { TokenType = TokenType.LeftBracket, Value = characters[i], StartPosition = i, Length = 1 });
+                            tokens.Add(new Token()
+                            {
+                                TokenType = TokenType.LeftBracket,
+                                Value = characters[i],
+                                StartPosition = i,
+                                Length = 1
+                            });
                             isFormulaSubPart = true;
                             break;
                         case ')':
-                            tokens.Add(new Token() { TokenType = TokenType.RightBracket, Value = characters[i], StartPosition = i, Length = 1 });
+
+                            tokens.Add(new Token()
+                            {
+                                TokenType = TokenType.RightBracket,
+                                Value = characters[i],
+                                StartPosition = i,
+                                Length = 1
+                            });
                             isFormulaSubPart = false;
                             break;
                         case '<':
                             if (i + 1 < characters.Length && characters[i + 1] == '=')
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '≤', StartPosition = i++, Length = 2 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '≤',
+                                    StartPosition = i++,
+                                    Length = 2
+                                });
                             else
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '<', StartPosition = i, Length = 1 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '<',
+                                    StartPosition = i,
+                                    Length = 1
+                                });
                             isFormulaSubPart = false;
                             break;
                         case '>':
                             if (i + 1 < characters.Length && characters[i + 1] == '=')
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '≥', StartPosition = i++, Length = 2 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '≥',
+                                    StartPosition = i++,
+                                    Length = 2
+                                });
                             else
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '>', StartPosition = i, Length = 1 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '>',
+                                    StartPosition = i,
+                                    Length = 1
+                                });
                             isFormulaSubPart = false;
                             break;
                         case '!':
                             if (i + 1 < characters.Length && characters[i + 1] == '=')
                             {
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '≠', StartPosition = i++, Length = 2 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '≠',
+                                    StartPosition = i++,
+                                    Length = 2
+                                });
                                 isFormulaSubPart = false;
                             }
                             else
-                                throw new ParseException(string.Format("Invalid token \"{0}\" detected at position {1}.", characters[i], i));
+                                throw new ParseException(string.Format(
+                                    "Invalid token \"{0}\" detected at position {1}.", characters[i], i));
                             break;
                         case '=':
                             if (i + 1 < characters.Length && characters[i + 1] == '=')
                             {
-                                tokens.Add(new Token() { TokenType = TokenType.Operation, Value = '=', StartPosition = i++, Length = 2 });
+                                tokens.Add(new Token()
+                                {
+                                    TokenType = TokenType.Operation,
+                                    Value = '=',
+                                    StartPosition = i++,
+                                    Length = 2
+                                });
+
                                 isFormulaSubPart = false;
                             }
                             else
-                                throw new ParseException(string.Format("Invalid token \"{0}\" detected at position {1}.", characters[i], i));
+                                throw new ParseException(string.Format(
+                                    "Invalid token \"{0}\" detected at position {1}.", characters[i], i));
                             break;
                         default:
-                            throw new ParseException(string.Format("Invalid token \"{0}\" detected at position {1}.", characters[i], i));
+                            throw new ParseException(string.Format("Invalid token \"{0}\" detected at position {1}.",
+                                characters[i], i));
                     }
                 }
             }
@@ -188,12 +283,15 @@ namespace Jace.Tokenizer
 
         private bool IsPartOfNumeric(char character, bool isFirstCharacter, bool isFormulaSubPart)
         {
-            return character == decimalSeparator || (character >= '0' && character <= '9') || (isFormulaSubPart && isFirstCharacter && character == '-');
+            return character == decimalSeparator || (character >= '0' && character <= '9') ||
+                   (isFormulaSubPart && isFirstCharacter && character == '-');
         }
 
         private bool IsPartOfVariable(char character, bool isFirstCharacter)
         {
-            return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') || (!isFirstCharacter && character >= '0' && character <= '9') || (!isFirstCharacter && character == '_');
+            return (character >= 'a' && character <= 'z') || (character >= 'A' && character <= 'Z') ||
+                   (!isFirstCharacter && character >= '0' && character <= '9') ||
+                   (!isFirstCharacter && character == '_');
         }
 
         private bool IsUnaryMinus(char currentToken, List<Token> tokens)
@@ -209,6 +307,7 @@ namespace Jace.Tokenizer
             }
             else
                 return false;
+
         }
     }
 }

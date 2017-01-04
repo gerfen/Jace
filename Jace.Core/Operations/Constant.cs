@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace Jace.Operations
 {
     public abstract class Constant<T> : Operation
     {
-        public Constant(DataType dataType, T value)
+        protected Constant(DataType dataType, T value)
             : base(dataType, false)
         {
-            this.Value = value;
+            Value = value;
         }
 
         public T Value { get; private set; }
 
         public override bool Equals(object obj)
         {
-            Constant<T> other = obj as Constant<T>;
+            var other = obj as Constant<T>;
             if (other != null)
-                return this.Value.Equals(other.Value);
-            else
-                return false;
+            {
+                return Value.Equals(other.Value);
+            }
+            return false;
         }
 
         public override int GetHashCode()
         {
-            return this.Value.GetHashCode();
+            return Value.GetHashCode();
         }
     }
 
@@ -38,9 +35,9 @@ namespace Jace.Operations
         }
     }
 
-    public class FloatingPointConstant : Constant<double>
+    public class FloatingPointConstant<T> : Constant<T>
     {
-        public FloatingPointConstant(double value)
+        public FloatingPointConstant(T value)
             : base(DataType.FloatingPoint, value)
         {
         }

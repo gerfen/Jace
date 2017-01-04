@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Jace.Operations;
+﻿using Jace.Operations;
 using Jace.Execution;
 
 namespace Jace
 {
-    public class Optimizer
+    public class Optimizer<T>
     {
-        private readonly IExecutor executor;
-
-        public Optimizer(IExecutor executor)
+        private readonly IExecutor<T> executor;
+        public Optimizer(IExecutor<T> executor)
         {
             this.executor = executor;
         }
@@ -19,10 +14,11 @@ namespace Jace
         public Operation Optimize(Operation operation, IFunctionRegistry functionRegistry)
         {
             if (!operation.DependsOnVariables && operation.GetType() != typeof(IntegerConstant)
-                && operation.GetType() != typeof(FloatingPointConstant))
+
+                && operation.GetType() != typeof(FloatingPointConstant<T>))
             {
-                double result = executor.Execute(operation, functionRegistry);
-                return new FloatingPointConstant(result);
+                T result = executor.Execute(operation, functionRegistry);
+                return new FloatingPointConstant<T>(result);
             }
             else
             {
@@ -56,7 +52,6 @@ namespace Jace
                     division.Base = Optimize(division.Base, functionRegistry);
                     division.Exponent = Optimize(division.Exponent, functionRegistry);
                 }
-
                 return operation;
             }
         }
