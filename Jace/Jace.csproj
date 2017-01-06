@@ -104,9 +104,6 @@
     <Compile Include="..\Jace.Core\Execution\INumericalOperations.cs">
       <Link>Execution\INumericalOperations.cs</Link>
     </Compile>
-    <Compile Include="..\Jace.Core\Execution\NullableDoubleDynamicCompiler.cs">
-      <Link>Execution\NullableDoubleDynamicCompiler.cs</Link>
-    </Compile>
     <Compile Include="..\Jace.Core\Execution\NullableDoubleNumericalOperations.cs">
       <Link>Execution\NullableDoubleNumericalOperations.cs</Link>
     </Compile>
@@ -118,6 +115,9 @@
     </Compile>
     <Compile Include="..\Jace.Core\ICalculationEngine.cs">
       <Link>Execution\ICalculationEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\Jace.Core\NullableDoubleCalculationEngine.cs">
+      <Link>NullableDoubleCalculationEngine.cs</Link>
     </Compile>
     <Compile Include="..\Jace.Core\Operations\Addition.cs">
       <Link>Operations\Addition.cs</Link>

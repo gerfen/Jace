@@ -302,7 +302,13 @@ namespace Jace.Execution
 
         private Type GetFuncType(int numberOfParameters)
         {
+#if NETFX_CORE
             string funcTypeName = string.Format("System.Func`{0}", numberOfParameters + 1);
+#elif NETCORE
+            string funcTypeName = string.Format("System.Func`{0}, System.Runtime", numberOfParameters + 1);
+#else
+            string funcTypeName = string.Format("System.Func`{0}, System.Core", numberOfParameters + 1);
+#endif
             Type funcType = Type.GetType(funcTypeName);
 
             Type[] typeArguments = new Type[numberOfParameters + 1];

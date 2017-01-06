@@ -155,6 +155,9 @@
     <Compile Include="..\Jace.Core\ICalculationEngine.cs">
       <Link>ICalculationEngine.cs</Link>
     </Compile>
+    <Compile Include="..\Jace.Core\NullableDoubleCalculationEngine.cs">
+      <Link>NullableDoubleCalculationEngine.cs</Link>
+    </Compile>
     <Compile Include="..\Jace.Core\Operations\Addition.cs">
       <Link>Operations\Addition.cs</Link>
     </Compile>
@@ -239,7 +242,6 @@
     <Compile Include="..\Jace.Core\VariableNotDefinedException.cs">
       <Link>VariableNotDefinedException.cs</Link>
     </Compile>
-    <Compile Include="Execution\NullableDoubleDynamicCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />

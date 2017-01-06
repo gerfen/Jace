@@ -66,18 +66,15 @@ namespace Jace
 
         private static IExecutor<decimal> CreateExecutor(ExecutionMode executionMode)
         {
-            if (executionMode == ExecutionMode.Interpreted)
+            switch (executionMode)
             {
-                return new Interpreter<decimal>(DecimalNumericalOperations.Instance);
-            }
-            else if (executionMode == ExecutionMode.Compiled)
-            {
-                return new ExpressionExecutor<decimal>((variables, functionRegistry) => new FormulaContext<decimal>(variables, functionRegistry), DecimalNumericalOperations.Instance);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format("Unsupported execution mode \"{0}\".", executionMode),
-                    "executionMode");
+                case ExecutionMode.Interpreted:
+                    return new Interpreter<decimal>(DecimalNumericalOperations.Instance);
+                case ExecutionMode.Compiled:
+                    return new ExpressionExecutor<decimal>((variables, functionRegistry) => new FormulaContext<decimal>(variables, functionRegistry), DecimalNumericalOperations.Instance);
+                default:
+                    throw new ArgumentException(string.Format("Unsupported execution mode \"{0}\".", executionMode),
+                        "executionMode");
             }
         }
 

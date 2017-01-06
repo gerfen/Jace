@@ -48,7 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Jace\Jace.csproj">
       <Project>{91cc2c02-72ea-43af-95b0-f45edf91538e}</Project>
-      <Name>Calculator</Name>
+      <Name>Jace</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

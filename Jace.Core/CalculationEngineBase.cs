@@ -177,6 +177,113 @@ namespace Jace
             FunctionRegistry.RegisterFunction(functionName, function);
         }
 
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        /// <remarks>Less than 8 input parameters support by most .Net versions</remarks>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        /// <remarks>Less than 8 input parameters support by most .Net versions</remarks>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+
+#endif
+
+#if NETCORE
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
+
+        /// <summary>
+        /// Add a function to the calculation engine.
+        /// </summary>
+        /// <param name="functionName">The name of the function. This name can be used in mathematical formulas.</param>
+        /// <param name="function">The implementation of the function.</param>
+        public void AddFunction(string functionName, Func<T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T, T> function)
+        {
+            FunctionRegistry.RegisterFunction(functionName, function);
+        }
 #endif
 
         /// <summary>
@@ -225,7 +332,7 @@ namespace Jace
         /// Users are not allowed to overwrite reserved variables or use function names as variables.
         /// If an invalid variable is detected an exception is thrown.
         /// </summary>
-        /// <param name="variables">The colletion of variables that must be verified.</param>
+        /// <param name="variables">The collection of variables that must be verified.</param>
         private void VerifyVariableNames(IDictionary<string, T> variables)
         {
             foreach (string variableName in variables.Keys)

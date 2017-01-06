@@ -80,6 +80,9 @@
     <Compile Include="..\Jace.Core.Tests\Mocks\MockFunctionRegistry.cs">
       <Link>Mocks\MockFunctionRegistry.cs</Link>
     </Compile>
+    <Compile Include="..\Jace.Core.Tests\NullableDoubleCalculationEngineTests.cs">
+      <Link>NullableDoubleCalculationEngineTests.cs</Link>
+    </Compile>
     <Compile Include="..\Jace.Core.Tests\TokenReaderTests.cs">
       <Link>TokenReaderTests.cs</Link>
     </Compile>

@@ -2678,7 +2678,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "Jace.Core/0.8.7": {
+      "Jace.Core/0.8.9": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -5485,7 +5485,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "Jace.Core/0.8.7": {
+      "Jace.Core/0.8.9": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -8309,7 +8309,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "Jace.Core/0.8.7": {
+      "Jace.Core/0.8.9": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -14358,7 +14358,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "Jace.Core/0.8.7": {
+    "Jace.Core/0.8.9": {
       "type": "project",
       "path": "../Jace.Core/project.json",
       "msbuildProject": "../Jace.Core/Jace.Core.xproj"
@@ -14366,7 +14366,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Jace.Core >= 0.8.7",
+      "Jace.Core >= 0.8.9",
       "dotnet-test-xunit >= 2.2.0-preview2-build1029",
       "xunit >= 2.2.0-beta4-build3444"
     ],

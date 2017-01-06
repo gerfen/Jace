@@ -2,7 +2,7 @@
     "version": "1.0.0-*",
     "testRunner": "xunit",
     "dependencies": {
-        "Jace.Core": "0.8.7",
+        "Jace.Core": "0.8.9",
         "xunit": "2.2.0-beta4-build3444",
         "dotnet-test-xunit": "2.2.0-preview2-build1029"
     },

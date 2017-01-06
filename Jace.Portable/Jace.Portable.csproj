@@ -162,9 +162,6 @@
     <Compile Include="..\Jace.Core\Execution\INumericalOperations.cs">
       <Link>Execution\INumericalOperations.cs</Link>
     </Compile>
-    <Compile Include="..\Jace.Core\Execution\NullableDoubleDynamicCompiler.cs">
-      <Link>Execution\NullableDoubleDynamicCompiler.cs</Link>
-    </Compile>
     <Compile Include="..\Jace.Core\Execution\NullableDoubleNumericalOperations.cs">
       <Link>Execution\NullableDoubleNumericalOperations.cs</Link>
     </Compile>
@@ -261,6 +258,7 @@
     <Compile Include="..\Jace.Core\VariableNotDefinedException.cs">
       <Link>VariableNotDefinedException.cs</Link>
     </Compile>
+    <Compile Include="NullableDoubleCalculationEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
